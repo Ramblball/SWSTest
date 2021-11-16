@@ -19,11 +19,6 @@ services:
       - ${PWD}/db/docker-driver:/flyway/drivers
     links:
       - "db:${POSTGRES_HOST_ALIAS}"
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - "8080:8080"
   backend:
     build:
       context: .

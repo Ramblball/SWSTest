@@ -28,13 +28,14 @@ fun Route.user() {
 
     post("/") {
         val userRequest = call.receive<UserDTO>()
-        if (!userRequest.validate()) {
-            call.respond(HttpStatusCode.BadRequest)
-        }
-        if (userService.addUser(userRequest)) {
-            call.respond(HttpStatusCode.Accepted)
+        if (userRequest.validate()) {
+            if (userService.addUser(userRequest)) {
+                call.respond(HttpStatusCode.Accepted)
+            } else {
+                call.respond(HttpStatusCode.InternalServerError)
+            }
         } else {
-            call.respond(HttpStatusCode.InternalServerError)
+            call.respond(HttpStatusCode.BadRequest)
         }
     }
 }

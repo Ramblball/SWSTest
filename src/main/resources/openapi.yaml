@@ -30,7 +30,7 @@
             "required": true,
             "description": "Details of the new user to create",
             "schema": {
-              "$ref": "#/definitions/CreateUserRequestDTO"
+              "$ref": "#/definitions/CreateUserDTO"
             }
           },
         ],
@@ -65,7 +65,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/UserResponseDTO"
+              "$ref": "#/definitions/GetUserDTO"
             }
           },
           "404": {
@@ -76,7 +76,7 @@
     }
   },
   "definitions": {
-    "CreateUserRequestDTO": {
+    "CreateUserDTO": {
       "type": "object",
       "properties": {
         "mail": {
@@ -103,10 +103,10 @@
         "phoneNumber",
       ]
     },
-    "UserResponseDTO": {
+    "GetUserDTO": {
       "type": "object",
       "properties": {
-     	"id": {
+        "id": {
           "type": "integer"
         },
         "mail": {
@@ -124,14 +124,7 @@
         "phoneNumber": {
           "type": "string"
         },
-      },
-      "required": [
-        "mail",
-        "firstName",
-        "lastName",
-        "patronymic",
-        "phoneNumber",
-      ]
+      }
     }
   }
 }

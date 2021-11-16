@@ -14,10 +14,10 @@ fun initDB(testing: Boolean) {
     properties.setProperty("dataSource.password", System.getenv("POSTGRES_PASSWORD"))
     if (testing) {
         properties.setProperty("dataSource.databaseName", System.getenv("POSTGRES_TEST_DB"))
-        properties.setProperty("dataSource.schema", "test")
+        properties.setProperty("dataSource.currentSchema", "test")
     } else {
         properties.setProperty("dataSource.databaseName", System.getenv("POSTGRES_DB"))
-        properties.setProperty("dataSource.schema", "public")
+        properties.setProperty("dataSource.currentSchema", "public")
     }
     properties.setProperty("dataSource.portNumber", System.getenv("POSTGRES_PORT"))
     properties.setProperty("dataSource.serverName", System.getenv("POSTGRES_HOST_ALIAS"))
