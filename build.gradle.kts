@@ -7,7 +7,7 @@ val exposed_version: String by project
 
 plugins {
     id("org.beryx.runtime") version "1.12.7"
-    id("org.flywaydb.flyway") version "5.2.4"
+    id("io.swagger.core.v3.swagger-gradle-plugin") version "2.1.11"
     kotlin("jvm") version "1.5.31"
     application
 }
@@ -17,14 +17,7 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
-}
-
-flyway {
-    url = System.getenv("POSTGRES_HOST_ALIAS")
-    user = System.getenv("POSTGRES_USER")
-    password = System.getenv("POSTGRES_PASSWORD")
-    baselineOnMigrate = true
-    locations = arrayOf("filesystem: resources / db / migration")
+    maven("https://jitpack.io")
 }
 
 dependencies {
@@ -35,16 +28,18 @@ dependencies {
     implementation("io.ktor:ktor-gson:$ktor_version")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
 
+    implementation("com.github.papsign:Ktor-OpenAPI-Generator:-SNAPSHOT")
+
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
 
     implementation("com.zaxxer:HikariCP:5.0.0")
-    implementation("org.postgresql:postgresql:42.2.24.jre7")
+    implementation("org.postgresql:postgresql:42.3.1")
 
     testImplementation("io.ktor:ktor-server-test-host:$ktor_version")
-    testImplementation("org.hamcrest:hamcrest:2.2")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlin_version")
+    testImplementation("junit:junit:4.13.2")
 }
 
 tasks.test {
