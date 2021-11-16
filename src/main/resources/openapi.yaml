@@ -1,0 +1,130 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "SWSTest API",
+    "version": "1.0.0",
+    "title": "SWSTest API"
+  },
+  "schemes": [
+    "http"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "paths": {
+    "/user/": {
+      "post": {
+        "summary": "Create a new user",
+        "description": "Create a new user",
+        "tags": [
+          "User"
+        ],
+        "operationId": "CreateUser",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Details of the new user to create",
+            "schema": {
+              "$ref": "#/definitions/CreateUserDTO"
+            }
+          },
+        ],
+        "responses": {
+          "201": {
+            "description": "Accepted"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/user/{userId}": {
+      "get": {
+        "summary": "Get a user info",
+        "description": "Get a info of a user",
+        "tags": [
+          "User"
+        ],
+        "operationId": "GetUserById",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "User`s Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetUserDTO"
+            }
+          },
+          "404": {
+            "description": "Not found",
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CreateUserDTO": {
+      "type": "object",
+      "properties": {
+        "mail": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "patronymic": {
+          "type": "string"
+        },
+        "phoneNumber": {
+          "type": "string"
+        },
+      },
+      "required": [
+        "mail",
+        "firstName",
+        "lastName",
+        "patronymic",
+        "phoneNumber",
+      ]
+    },
+    "GetUserDTO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "mail": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "patronymic": {
+          "type": "string"
+        },
+        "phoneNumber": {
+          "type": "string"
+        },
+      }
+    }
+  }
+}

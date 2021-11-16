@@ -1,4 +1,4 @@
-version: "3.9"
+version: "2.1"
 
 services:
   db:
@@ -8,11 +8,17 @@ services:
       POSTGRES_DB: "${POSTGRES_DB}"
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - "8080:8080"
+  flyway:
+    image: boxfuse/flyway
+    depends_on:
+      - db
+    command: -configFiles=/flyway/conf/flyway.conf -url=${POSTGRES_CONNECTION_STR} -user=${POSTGRES_USER} -password=${POSTGRES_PASSWORD} migrate
+    volumes:
+      - ${PWD}/db/migration:/flyway/sql
+      - ${PWD}/db/docker-flyway:/flyway/conf
+      - ${PWD}/db/docker-driver:/flyway/drivers
+    links:
+      - "db:${POSTGRES_HOST_ALIAS}"
   backend:
     build:
       context: .
@@ -21,6 +27,7 @@ services:
       - .env
     depends_on:
       - db
+      - flyway
     links:
       - "db:${POSTGRES_HOST_ALIAS}"
     ports:
